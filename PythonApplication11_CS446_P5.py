@@ -375,11 +375,70 @@ class BM25():
             file.write(string)
 
 class QL():
-    def __init__(self):
-        self.input = input
+    def __init__(self, query):
+        self.results = {}
+        self.l = 0.8
+        self.query = query
+        self.count_data = {}
+        self.inverted_indexes = {}
+
+    def get_inverted_indexes(self, file):
+        file = open(file, 'rb')
+        self.inverted_indexes = json.load(file)
+        file.close()
+
+    def get_count_data(self, file):
+        file = open(file, 'rb')
+        self.count_data = json.load(file)
+        file.close()
 
     def ql(self):
-        pass
+        terms = self.query.split()
+        C = sum(self.count_data.values())
+        cqi = 0
+        fqi = 0
+        for keys, values in self.count_data.iteritems():
+            if values > 100 and keys.count("total") == 0:
+                D = values
+                for term in terms:
+                    items = self.inverted_indexes[term]
+                    # query words occurs in collection
+                    for item in items:
+                        if item['sceneId'] == keys:
+                            fqi = len(item['pos'])
+                        cqi += len(item['pos'])
+                    if self.results.has_key(keys):
+                        self.results[keys] += math.log(self.formula(C, D, fqi, cqi))
+                    else:
+                        self.results[keys] = 0
+
+    def formula(self, C, D, fqi, cqi):
+        result = ((1 - self.l) * (fqi/D)) + (self.l * (cqi/C))
+        if result == 0.0:
+            return 1
+        else:
+            return result
+    
+    def save_output(self):
+        # rank values
+        ranked = []
+        for x in range(len(self.results)):
+            max = -100
+            k = None
+            for key, value in self.results.iteritems():
+                if key not in ranked:
+                    if value > max:
+                        max = value
+                        k = key
+            ranked.append(k)
+
+        # save to file
+        file = open("pdesai-ql.trecrun", 'a')
+        counter = 0
+        for items in ranked:
+            counter += 1
+            string = "Q2 skip {:<40} {:<4} {:<15} pdesai-ranked\n".format(items, str(counter), str(self.results[items]))
+            file.write(string)
 
 if __name__ == '__main__':
     start = time.clock()
@@ -389,15 +448,12 @@ if __name__ == '__main__':
     I.create_inverted_indexes()
     #I.input_query()
     # prediction models begin
-    '''
-    query = "to be or not to be"
-    BM25 = BM25(query)
-    BM25.get_count_data(file + "-output-counts.json")
-    BM25.get_inverted_indexes(file + "-output.json")
+    query = "hope dream sleep"
+    QL = QL(query)
+    QL.get_count_data(file + "-output-counts.json")
+    QL.get_inverted_indexes(file + "-output.json")
     # run algorithm
-    BM25.run_algorithm()
-    BM25.save_output()
-    '''
-
+    QL.ql()
+    QL.save_output()
     print time.clock() - start
 
