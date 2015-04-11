@@ -314,7 +314,7 @@ class BM25():
         self.avdl /= total
         file.close()
 
-    def run_algorithm(self):
+    def bm25(self):
         terms = self.query.split()
         # go through all scenes
         for keys, values in self.count_data.iteritems():
@@ -371,7 +371,7 @@ class BM25():
         counter = 0
         for items in ranked:
             counter += 1
-            string = "Q6 skip {:<40} {:<4} {:<15} pdesai-ranked\n".format(items, str(counter), str(self.results[items]))
+            string = "Q7 skip {:<40} {:<4} {:<15} pdesai-ranked\n".format(items, str(counter), str(self.results[items]))
             file.write(string)
 
 class QL():
@@ -437,7 +437,7 @@ class QL():
         counter = 0
         for items in ranked:
             counter += 1
-            string = "Q2 skip {:<40} {:<4} {:<15} pdesai-ranked\n".format(items, str(counter), str(self.results[items]))
+            string = "Q7 skip {:<40} {:<4} {:<15} pdesai-ranked\n".format(items, str(counter), str(self.results[items]))
             file.write(string)
 
 if __name__ == '__main__':
@@ -447,13 +447,11 @@ if __name__ == '__main__':
     I.input_file()
     I.create_inverted_indexes()
     #I.input_query()
-    # prediction models begin
-    query = "hope dream sleep"
-    QL = QL(query)
-    QL.get_count_data(file + "-output-counts.json")
-    QL.get_inverted_indexes(file + "-output.json")
-    # run algorithm
-    QL.ql()
-    QL.save_output()
+    query = "setting the scene"
+    BM25 = BM25(query)
+    BM25.get_count_data(file + "-output-counts.json")
+    BM25.get_inverted_indexes(file + "-output.json")
+    BM25.bm25()
+    BM25.save_output()
     print time.clock() - start
 
