@@ -1,0 +1,18 @@
+{
+  "corpus" : [ {
+      "playId" : "othello",
+      "sceneId" : "othello:0.0",
+      "sceneNum" : 0,
+	  "text":  "thee you you venice lady macbeth a rose"
+    }, {
+      "playId" : "othello",
+      "sceneId" : "othello:0.1",
+      "sceneNum" : 1,
+	  "text":  "thee thee thee you you rome a rose by any other name"
+    } , {
+      "playId" : "othello",
+      "sceneId" : "othello:0.2",
+      "sceneNum" : 2,
+	  "text":  "thee thee thee lady macbeth thee you you you italy"
+    }  ]
+  }

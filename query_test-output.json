@@ -1,0 +1,189 @@
+{
+  "a": [
+    {
+      "playId": "othello", 
+      "pos": [
+        7
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }
+  ], 
+  "any": [
+    {
+      "playId": "othello", 
+      "pos": [
+        10
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }
+  ], 
+  "by": [
+    {
+      "playId": "othello", 
+      "pos": [
+        9
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }
+  ], 
+  "italy": [
+    {
+      "playId": "othello", 
+      "pos": [
+        10
+      ], 
+      "sceneId": "othello:0.2", 
+      "sceneNum": 2
+    }
+  ], 
+  "lady": [
+    {
+      "playId": "othello", 
+      "pos": [
+        5
+      ], 
+      "sceneId": "othello:0.0", 
+      "sceneNum": 0
+    }, 
+    {
+      "playId": "othello", 
+      "pos": [
+        4
+      ], 
+      "sceneId": "othello:0.2", 
+      "sceneNum": 2
+    }
+  ], 
+  "macbeth": [
+    {
+      "playId": "othello", 
+      "pos": [
+        6
+      ], 
+      "sceneId": "othello:0.0", 
+      "sceneNum": 0
+    }, 
+    {
+      "playId": "othello", 
+      "pos": [
+        5
+      ], 
+      "sceneId": "othello:0.2", 
+      "sceneNum": 2
+    }
+  ], 
+  "name": [
+    {
+      "playId": "othello", 
+      "pos": [
+        12
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }
+  ], 
+  "other": [
+    {
+      "playId": "othello", 
+      "pos": [
+        11
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }
+  ], 
+  "rome": [
+    {
+      "playId": "othello", 
+      "pos": [
+        6
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }
+  ], 
+  "rose": [
+    {
+      "playId": "othello", 
+      "pos": [
+        8
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }
+  ], 
+  "thee": [
+    {
+      "playId": "othello", 
+      "pos": [
+        1
+      ], 
+      "sceneId": "othello:0.0", 
+      "sceneNum": 0
+    }, 
+    {
+      "playId": "othello", 
+      "pos": [
+        1, 
+        2, 
+        3
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }, 
+    {
+      "playId": "othello", 
+      "pos": [
+        1, 
+        2, 
+        3, 
+        6
+      ], 
+      "sceneId": "othello:0.2", 
+      "sceneNum": 2
+    }
+  ], 
+  "venice": [
+    {
+      "playId": "othello", 
+      "pos": [
+        4
+      ], 
+      "sceneId": "othello:0.0", 
+      "sceneNum": 0
+    }
+  ], 
+  "you": [
+    {
+      "playId": "othello", 
+      "pos": [
+        2, 
+        3
+      ], 
+      "sceneId": "othello:0.0", 
+      "sceneNum": 0
+    }, 
+    {
+      "playId": "othello", 
+      "pos": [
+        4, 
+        5
+      ], 
+      "sceneId": "othello:0.1", 
+      "sceneNum": 1
+    }, 
+    {
+      "playId": "othello", 
+      "pos": [
+        7, 
+        8, 
+        9
+      ], 
+      "sceneId": "othello:0.2", 
+      "sceneNum": 2
+    }
+  ]
+}
