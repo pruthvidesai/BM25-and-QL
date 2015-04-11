@@ -288,27 +288,73 @@ class Inverted():
             w.writerow(my_dict)
 
 class BM25():
-    def __init__(self, input):
-        self.input = input
+    def __init__(self, query):
         self.k1 = 1.2
         self.k2 = 100
         self.b = 0.75
         self.K = 0
         self.avdl = 0
+        self.results = {}
+        self.query = query
         self.count_data = None
+        self.inverted_indexes = None
+
+    def get_inverted_indexes(self, file):
+        file = open(file, 'rb')
+        self.inverted_indexes = json.load(file)
+        file.close()
 
     def get_count_data(self, file):
-        # find average doc length
         file = open(file, 'rb')
         self.count_data = json.load(file)
-
-
+        total = len(self.count_data)
+        # average doc length
+        for values in self.count_data.itervalues():
+            self.avdl += values
+        self.avdl /= total
+        file.close()
 
     def run_algorithm(self):
-        pass
+        terms = self.query.split()
+        # go through all scenes
+        for keys, values in self.count_data.iteritems():
+            self.results[keys] = self.formula(terms, keys, values)
+            print keys, self.results[keys]
 
-    def KValue(self, dl, avdl):
-        self.K = self.k1 * ((1 - self.b) + (self.b * (dl / avdl)))
+
+    def formula(self, terms, scene, dl):
+        # BM25 formula
+        N = self.count_data["total_scenes"]
+        R = 0
+        ri = 0
+        result = 0
+        fi = 0
+        for term in terms:
+            ni = len(self.inverted_indexes[term])
+            qfi = self.query.count(term)
+            fi = 0
+            # frequency
+            items = self.inverted_indexes[term]
+            for item in items:
+                if item['sceneId'] == scene:
+                    fi = len(item['pos'])
+                    break
+            # burn
+            print fi
+            numerator = (ri + 0.5) / (R - ri + 0.5)
+            denomminator = (ni - ri + 0.5) / (N - ni - R + ri + 0.5)
+            part2 = ((self.k1 + 1) * fi) / (self.KValue(dl) + fi)
+            part3 = ((self.k2 + 1) * qfi) / (self.k2 + qfi)
+            if part2 == 0.0:
+                part2 = 1
+            if part3 == 0.0:
+                part3 = 1
+            result += math.log((numerator/denomminator) * part2 * part3)
+        return result
+
+    def KValue(self, dl):
+        self.K = self.k1 * ((1 - self.b) + (self.b * (dl / self.avdl)))
+        return self.K
 
 
 class QL():
@@ -328,8 +374,11 @@ if __name__ == '__main__':
     I.input_query()
     # prediction models begin
     print "In BM25"
-    BM25 = BM25(file + "-output.json")
+    query = "the king queen royalty"
+    BM25 = BM25(query)
     BM25.get_count_data(file + "-output-counts.json")
+    BM25.get_inverted_indexes(file + "-output.json")
     # run algorithm
+    BM25.run_algorithm()
     print time.clock() - start
 
