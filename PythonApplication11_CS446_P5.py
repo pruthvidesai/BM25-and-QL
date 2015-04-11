@@ -318,9 +318,8 @@ class BM25():
         terms = self.query.split()
         # go through all scenes
         for keys, values in self.count_data.iteritems():
-            self.results[keys] = self.formula(terms, keys, values)
-            print keys, self.results[keys]
-
+            if values > 100 and keys.count("total") == 0:
+                self.results[keys] = self.formula(terms, keys, values)
 
     def formula(self, terms, scene, dl):
         # BM25 formula
@@ -328,7 +327,6 @@ class BM25():
         R = 0
         ri = 0
         result = 0
-        fi = 0
         for term in terms:
             ni = len(self.inverted_indexes[term])
             qfi = self.query.count(term)
@@ -340,7 +338,6 @@ class BM25():
                     fi = len(item['pos'])
                     break
             # burn
-            print fi
             numerator = (ri + 0.5) / (R - ri + 0.5)
             denomminator = (ni - ri + 0.5) / (N - ni - R + ri + 0.5)
             part2 = ((self.k1 + 1) * fi) / (self.KValue(dl) + fi)
@@ -356,6 +353,26 @@ class BM25():
         self.K = self.k1 * ((1 - self.b) + (self.b * (dl / self.avdl)))
         return self.K
 
+    def save_output(self):
+        # rank values
+        ranked = []
+        for x in range(len(self.results)):
+            max = -100
+            k = None
+            for key, value in self.results.iteritems():
+                if key not in ranked:
+                    if value > max:
+                        max = value
+                        k = key
+            ranked.append(k)
+
+        # save to file
+        file = open("pdesai-bm25.trecrun", 'a')
+        counter = 0
+        for items in ranked:
+            counter += 1
+            string = "Q6 skip {:<40} {:<4} {:<15} pdesai-ranked\n".format(items, str(counter), str(self.results[items]))
+            file.write(string)
 
 class QL():
     def __init__(self):
@@ -366,19 +383,21 @@ class QL():
 
 if __name__ == '__main__':
     start = time.clock()
-    print start
     file = "shakespeare-scenes"
     I = Inverted(file + ".json")
     I.input_file()
     I.create_inverted_indexes()
-    I.input_query()
+    #I.input_query()
     # prediction models begin
-    print "In BM25"
-    query = "the king queen royalty"
+    '''
+    query = "to be or not to be"
     BM25 = BM25(query)
     BM25.get_count_data(file + "-output-counts.json")
     BM25.get_inverted_indexes(file + "-output.json")
     # run algorithm
     BM25.run_algorithm()
+    BM25.save_output()
+    '''
+
     print time.clock() - start
 

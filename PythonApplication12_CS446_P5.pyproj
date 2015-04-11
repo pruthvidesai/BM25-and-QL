@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f3236a33-d1f8-4d02-967c-9d187c5e7c16</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>PythonApplication12_CS446_P5.py</StartupFile>
+    <StartupFile>PythonApplication11_CS446_P5.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PythonApplication12_CS446_P5.py" />
+    <Compile Include="PythonApplication11_CS446_P5.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1-output.json" />
+    <Content Include="1.json" />
+    <Content Include="input.txt" />
+    <Content Include="mycsvfile.csv" />
+    <Content Include="out.txt" />
+    <Content Include="output.txt" />
+    <Content Include="query_test-output.json" />
+    <Content Include="query_test.json" />
+    <Content Include="shakespeare-scenes-output-counts.json" />
+    <Content Include="shakespeare-scenes-output.json" />
+    <Content Include="shakespeare-scenes.json" />
+    <Content Include="smallTest-output.json" />
+    <Content Include="smallTest.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
